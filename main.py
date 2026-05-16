@@ -2,11 +2,11 @@ import os
 from cloudlink import server
 
 if __name__ == "__main__":
-    # Instantiate the server object directly using the updated module format
     server_app = server()
     
-    # Grab the port dynamically from Render's environment
-    port = int(os.environ.get("PORT", 3000))
+    # Render explicitly requires reading its assigned PORT environment variable
+    # If it is missing, fallback to 10000 (Render's default fallback port)
+    port = int(os.environ.get("PORT", 10000))
     
-    # Run the server
+    # Bind directly to 0.0.0.0 so Render's internal proxy maps it to your public URL
     server_app.run(ip="0.0.0.0", port=port)
