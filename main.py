@@ -17,11 +17,14 @@ async def handler(websocket):
                 cmd = data.get("cmd")
 
                 # Handle initial connection handshake
+                # Handle initial connection handshake
                 if cmd == "handshake":
                     # 1. Send client IP status back
                     await websocket.send(json.dumps({"cmd": "client_ip", "val": "127.0.0.1"}))
-                    # 2. Tell PenguinMod what version the server is running
-                    await websocket.send(json.dumps({"cmd": "server_version", "val": "4.1"}))
+    
+                    # 2. Tell PenguinMod what version the server is running (0.2.0 removes the security warning)
+                    await websocket.send(json.dumps({"cmd": "server_version", "val": "0.2.0"}))
+    
                     # 3. Complete setup state with a successful status code
                     await websocket.send(json.dumps({
                         "cmd": "statuscode", 
