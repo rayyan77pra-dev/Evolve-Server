@@ -41,7 +41,12 @@ async def handler(websocket):
 
                 # Handle Global Variables syncing
                 elif cmd == "gvar":
-                    broadcast_packet = {"cmd": "gvar", "name": data.get("name"), "val": data.get("val" + 1)}
+                    broadcast_packet = {"cmd": "gvar", "name": data.get("name"), "val": data.get("val")}
+                    websockets.broadcast(connected_clients, json.dumps(broadcast_packet))
+
+                # Test Code For Running
+                elif cmd == "test":
+                    broadcast_packet = {"cmd": "test", "name": data.get("name"), "val": data.get(int("val") + 1)
                     websockets.broadcast(connected_clients, json.dumps(broadcast_packet))
 
             except json.JSONDecodeError:
