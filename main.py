@@ -46,7 +46,7 @@ async def handler(websocket):
 
                 # Test Code For Running
                 elif cmd == "test":
-                    broadcast_packet = {"cmd": "test", "name": data.get("name"), "val": data.get(int("val") + 1)
+                    broadcast_packet = {"cmd": "test", "name": data.get("name"), "val": data.get(int("val") + 1)}
                     websockets.broadcast(connected_clients, json.dumps(broadcast_packet))
 
             except json.JSONDecodeError:
