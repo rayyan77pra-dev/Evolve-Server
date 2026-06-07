@@ -42,7 +42,7 @@ async def handler(websocket):
                 # Handle Global Variables syncing
                 elif cmd == "gvar":
                     broadcast_packet = {"cmd": "gvar", "name": data.get("name"), "val": data.get("val")}
-                    websockets.broadcast(connected_clients, json.dumps(broadcast_packet)
+                    websockets.broadcast(connected_clients, json.dumps(broadcast_packet))
 
                 elif cmd == "test":
                     list = ["test", broadcast_packet, "test"]
