@@ -44,7 +44,7 @@ async def handler(websocket):
                     broadcast_packet = {"cmd": "gvar", "name": data.get("name"), "val": data.get("val")}
                     websockets.broadcast(connected_clients, json.dumps(broadcast_packet))
 
-                 if cmd == "cvar":
+                elif cmd == "cvar":
                     # Get the original value sent by the user (defaults to empty string if missing)
                     original_val = str(data.get("val", ""))
                     
