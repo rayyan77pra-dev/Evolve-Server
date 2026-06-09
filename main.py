@@ -62,6 +62,7 @@ async def handler(websocket):
                         "cmd": "statuscode", 
                         "code": f"Modified data['test'] successfully to {data['test']}", 
                         "code_id": 200
+                    }))
                     
             except json.JSONDecodeError:
                 # Catch bad JSON formatting cleanly without dropping the server offline
