@@ -43,7 +43,11 @@ async def handler(websocket):
                 elif cmd == "gvar":
                     broadcast_packet = {"cmd": "gvar", "name": data.get("name"), "val": data.get("val")}
                     websockets.broadcast(connected_clients, json.dumps(broadcast_packet))
-      
+
+                elif cmd == "cvar":
+                    data = json.loads(message)
+                    data["test"] = int(data.get("test")) + int(data.get('val'))
+                    
             except json.JSONDecodeError:
                 # Catch bad JSON formatting cleanly without dropping the server offline
                 pass
