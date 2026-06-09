@@ -45,24 +45,23 @@ async def handler(websocket):
                     websockets.broadcast(connected_clients, json.dumps(broadcast_packet))
 
                 elif cmd == "cvar":
-                    # Get the original value sent by the user (defaults to empty string if missing)
                     original_val = str(data.get("val", ""))
-                    
-                    # Overwrite data["test"] dynamically with "test" + the value sent
                     data["test"] = f"test{original_val}"
-                    
-                    # Print to your server terminal/Render logs to verify it worked!
-                    print(f"--- SUCCESSFUL MODIFICATION ---")
-                    print(f"Original val sent: {original_val}")
-                    print(f"Modified data['test']: {data['test']}")
-                    print(f"Full updated dictionary: {data}\n")
-                    
-                    # (Optional) Send a status update back to the player confirming the edit
+    
+                    # Securely broadcast the modified data back to PenguinMod as a global variable named "test_result"
+                    await websocket.send(json.dumps({
+                        "cmd": "gvar",
+                        "name": "test_result",
+                        "val": data["test"]
+                    }))
+    
+                    # This keeps your status code debugging active
                     await websocket.send(json.dumps({
                         "cmd": "statuscode", 
                         "code": f"Modified data['test'] successfully to {data['test']}", 
                         "code_id": 200
                     }))
+
                     
             except json.JSONDecodeError:
                 # Catch bad JSON formatting cleanly without dropping the server offline
