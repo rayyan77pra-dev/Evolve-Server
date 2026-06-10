@@ -45,13 +45,13 @@ async def handler(websocket):
                     websockets.broadcast(connected_clients, json.dumps(broadcast_packet))
 
                 elif cmd == "cvar":
-                    original_val = str(data.get("val", ""))
-                    data["test"] = f"test{original_val}"
+                    original_val = int(data.get("val", ""))
+                    data["test"] = original_val + int(data.get("test"))
     
                     # Securely broadcast the modified data back to PenguinMod as a global variable named "test_result"
                     await websocket.send(json.dumps({
                         "cmd": "gvar",
-                        "name": "test_result",
+                        "name": "test",
                         "val": data["test"]
                     }))
     
