@@ -45,23 +45,11 @@ async def handler(websocket):
                     websockets.broadcast(connected_clients, json.dumps(broadcast_packet))
 
                 elif cmd == "cvar":
-                    original_val = int(data.get("val", ""))
-                    data["test"] = original_val + int(data.get("test"))
-    
-                    # Securely broadcast the modified data back to PenguinMod as a global variable named "test_result"
                     await websocket.send(json.dumps({
                         "cmd": "gvar",
                         "name": "test",
-                        "val": data["test"]
+                        "val": data["test"] + val
                     }))
-    
-                    # This keeps your status code debugging active
-                    await websocket.send(json.dumps({
-                        "cmd": "statuscode", 
-                        "code": f"Modified data['test'] successfully to {data['test']}", 
-                        "code_id": 200
-                    }))
-
                     
             except json.JSONDecodeError:
                 # Catch bad JSON formatting cleanly without dropping the server offline
